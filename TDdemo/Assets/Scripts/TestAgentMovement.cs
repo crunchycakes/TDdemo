@@ -31,7 +31,7 @@ public class TestAgentMovement : MonoBehaviour
         if (pathIndex < path.Length)
         {
         this.gameObject.transform.position = Vector3.MoveTowards(
-            this.gameObject.transform.position, path[pathIndex], Time.deltaTime * 0.2f
+            this.gameObject.transform.position, path[pathIndex], Time.deltaTime * 3f
             );
         }
 

@@ -150,17 +150,20 @@ public class AStarPathfinder : MonoBehaviour
     }
 
     // from goal node, get a path back
+    // needs an offset by 0.5 each axis
     private Vector3[] rebuildPath(GridNode node)
     {
+        Vector3 offset = new Vector3(0.5f, 0.5f, 0f);
+
         ArrayList tempArray = new ArrayList();
         while (node.parent != node)
         {
             Vector3Int cellPos = new Vector3Int(node.pos.Item1, node.pos.Item2, 0);
-            tempArray.Add(gridHandler.backgroundTilemap.CellToWorld(cellPos));
+            tempArray.Add(gridHandler.backgroundTilemap.CellToWorld(cellPos) + offset);
             node = node.parent;
         }
         Vector3Int finalcellPos = new Vector3Int(node.pos.Item1, node.pos.Item2, 0);
-        tempArray.Add(gridHandler.backgroundTilemap.CellToWorld(finalcellPos));
+        tempArray.Add(gridHandler.backgroundTilemap.CellToWorld(finalcellPos) + offset);
 
         Vector3[] finalArray = (Vector3[])tempArray.ToArray(typeof(Vector3));
         Array.Reverse(finalArray);
