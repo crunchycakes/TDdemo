@@ -62,7 +62,6 @@ public class AStarPathfinder : MonoBehaviour
 
         while (open.Count > 0 && attempts < attemptLimit)
         {
-            Debug.Log(attempts);
             attempts++;
             current = (GridNode) open[0]; // prio queue
 
@@ -84,7 +83,6 @@ public class AStarPathfinder : MonoBehaviour
                     || gridHandler.terrainTilemap.HasTile(newPosVector)
                 )
                 {
-                    Debug.Log("checked tile does not exist or is blocked");
                     continue;
                 }
 
@@ -96,7 +94,6 @@ public class AStarPathfinder : MonoBehaviour
                 {
                     if (node.pos == newPos && node.fvalue < newFValue)
                     {
-                        Debug.Log("checked tile has superior alternative in open");
                         toContinue = true;
                         break;
                     }
@@ -107,7 +104,6 @@ public class AStarPathfinder : MonoBehaviour
                 {
                     if (node.pos == newPos && node.fvalue < newFValue)
                     {
-                        Debug.Log("checked tile has superior alternative in closed");
                         toContinue = true;
                         break;
                     }
@@ -115,7 +111,6 @@ public class AStarPathfinder : MonoBehaviour
                 if (toContinue) { continue; }
 
                 // all checks passed
-                Debug.Log("checked tile passes");
                 int insertPos;
                 for (insertPos = 0; insertPos < open.Count; insertPos++) // maintain ascending
                 {
