@@ -3125,6 +3125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013033731}
   - component: {fileID: 2013033730}
+  - component: {fileID: 2013033733}
   - component: {fileID: 2013033732}
   m_Layer: 0
   m_Name: Agent
@@ -3212,6 +3213,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee817e41ed44e744bacf986e9f33402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2013033733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013033729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab69868d64fbeb44f99514a5d4062d88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathfinder: {fileID: 2013033732}
+  end: {fileID: 1854246843}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
