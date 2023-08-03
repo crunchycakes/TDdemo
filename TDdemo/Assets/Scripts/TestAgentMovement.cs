@@ -19,10 +19,6 @@ public class TestAgentMovement : MonoBehaviour
         pathIndex = 0;
 
         path = pathfinder.pathfind(this.transform.position, end.transform.position);
-        foreach (Vector3 node in path)
-        {
-            Debug.Log((node.x, node.y));
-        }
     }
 
     // Update is called once per frame
