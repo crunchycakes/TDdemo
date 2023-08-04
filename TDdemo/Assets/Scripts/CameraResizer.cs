@@ -27,16 +27,19 @@ public class CameraResizer : MonoBehaviour
     private void resizeCamera()
     {
         // first, determine if width or height is limiting; or, proportionally larger when aspect normalised
-        float BGSize;
-        if (background.localBounds.extents.x / cam.aspect > background.localBounds.extents.y) // wider than tall
+        Debug.Log(cam.aspect);
+        float BGWide = (background.localBounds.extents.x / cam.aspect) * (1f + 0.5f / cam.aspect);
+        Debug.Log(BGWide);
+        float BGTall = background.localBounds.extents.y * 1.5f;
+        Debug.Log(BGTall);
+        if (BGWide > BGTall) // wider than tall
         {
-            BGSize = (background.localBounds.extents.x / cam.aspect) * 1.2f;
+            cam.orthographicSize = BGWide;
         } else // taller than wide
         {
-            BGSize = background.localBounds.extents.y * (1 + 0.2f * cam.aspect);
+            cam.orthographicSize = BGTall;
         }
 
-        cam.orthographicSize = BGSize;
         cam.transform.position = new Vector3(background.localBounds.center.x, background.localBounds.center.y,
             cam.transform.position.z);
     }
