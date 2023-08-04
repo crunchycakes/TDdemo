@@ -22,24 +22,22 @@ public class CameraResizer : MonoBehaviour
         
     }
 
-    // sizes and centers camera to guarantee a border of at least 1/6 of screen
+    // sizes and centers camera to guarantee a sizable border
     // TODO: instead, base resize on UI components
     private void resizeCamera()
     {
         // first, determine if width or height is limiting; or, proportionally larger when aspect normalised
         float BGSize;
-        if ((float)background.cellBounds.xMax / cam.aspect > (float)background.cellBounds.yMax) // wider than tall
+        if (background.localBounds.extents.x / cam.aspect > background.localBounds.extents.y) // wider than tall
         {
-            Debug.Log("x bigger");
-            BGSize = (float)background.cellBounds.xMax / cam.aspect;
+            BGSize = (background.localBounds.extents.x / cam.aspect) * 1.2f;
         } else // taller than wide
         {
-            Debug.Log("y bigger");
-            BGSize = (float)background.cellBounds.yMax;
+            BGSize = background.localBounds.extents.y * (1 + 0.2f * cam.aspect);
         }
 
-        cam.orthographicSize = (BGSize * (6f / 5f));
-        cam.transform.position = new Vector3(background.cellBounds.center.x, background.cellBounds.center.y,
+        cam.orthographicSize = BGSize;
+        cam.transform.position = new Vector3(background.localBounds.center.x, background.localBounds.center.y,
             cam.transform.position.z);
     }
 
