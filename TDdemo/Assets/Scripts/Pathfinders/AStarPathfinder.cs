@@ -36,7 +36,7 @@ public class AStarPathfinder : MonoBehaviour
 
 
     // Start is called before the first frame update
-    private void Start()
+    public void Init()
     {
         gridHandler = GameObject.Find("Admin").GetComponent<GridHandler>();
     }

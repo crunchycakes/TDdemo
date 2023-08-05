@@ -13,10 +13,16 @@ public class TestAgentMovement : MonoBehaviour
     private Vector3[] path;
     private int pathIndex;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
+        pathfinder.Init();
+
         pathIndex = 0;
+
+        if (end == null)
+        {
+            end = GameObject.Find("Goal");
+        }
 
         path = pathfinder.pathfind(this.transform.position, end.transform.position);
     }
