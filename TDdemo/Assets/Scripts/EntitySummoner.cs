@@ -32,14 +32,14 @@ public class EntitySummoner : MonoBehaviour
 
         } else
         {
-            Debug.Log("The following class is already init: ");
+            Debug.Log("EntitySummoner is already init");
         }
 
     }
 
     public static TestAgent SummonEnemy(int enemyID)
     {
-        TestAgent summonedEnemy = null;
+        TestAgent summonedEnemy;
 
         if (enemyPrefabs.ContainsKey(enemyID))
         {
@@ -48,10 +48,13 @@ public class EntitySummoner : MonoBehaviour
             if (referencedQueue.Count > 0)
             {
                 summonedEnemy = referencedQueue.Dequeue();
+                summonedEnemy.transform.position = new Vector3(-3.5f, 1.5f);
                 summonedEnemy.Init();
+
+                summonedEnemy.gameObject.SetActive(true);
             } else
             {
-                GameObject newEnemy = Instantiate(enemyPrefabs[enemyID], Vector3.zero, Quaternion.identity);
+                GameObject newEnemy = Instantiate(enemyPrefabs[enemyID], new Vector3(-3.5f, 1.5f), Quaternion.identity);
                 summonedEnemy = newEnemy.GetComponent<TestAgent>();
                 summonedEnemy.Init();
             }
@@ -62,7 +65,17 @@ public class EntitySummoner : MonoBehaviour
             return null;
         }
 
+        enemiesInGame.Add(summonedEnemy);
+        summonedEnemy.ID = enemyID;
         return summonedEnemy;
+    }
+
+    public static void RemoveEnemy(TestAgent agent)
+    {
+        enemyObjectPools[agent.ID].Enqueue(agent);
+        agent.gameObject.SetActive(false);
+        enemiesInGame.Remove(agent);
+        // pooling; don't make gc run
     }
 
 }

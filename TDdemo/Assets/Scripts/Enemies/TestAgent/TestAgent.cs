@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TestAgent : MonoBehaviour
 {
-
     public float maxHealth;
     [HideInInspector]
     public float health;

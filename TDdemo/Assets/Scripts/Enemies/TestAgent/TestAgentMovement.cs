@@ -42,7 +42,11 @@ public class TestAgentMovement : MonoBehaviour
             }
         }
 
-        
+        if (pathIndex >= path.Length) // if end reached, deactivate
+        {
+            // ew coupling
+            EntitySummoner.RemoveEnemy(gameObject.GetComponent<TestAgent>());
+        }
 
     }
 }

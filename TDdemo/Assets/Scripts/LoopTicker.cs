@@ -6,7 +6,7 @@ public class LoopTicker : MonoBehaviour
 {
 
     private static Queue<int> enemyIDsToSummon;
-
+    private static Queue<int> enemiesToRemove;
     public bool ContinueLoop;
 
     // Start is called before the first frame update
@@ -16,8 +16,7 @@ public class LoopTicker : MonoBehaviour
         EntitySummoner.Init();
 
         StartCoroutine(GameLoop());
-        //InvokeRepeating("summontest", 0f, 5f);
-        Invoke("summontest", 1f);
+        InvokeRepeating("summontest", 0f, 3f);
     }
 
     void summontest()
@@ -29,15 +28,29 @@ public class LoopTicker : MonoBehaviour
     {
         while (ContinueLoop)
         {
-            // tick
-
+            // spawn enemy
             if (enemyIDsToSummon.Count > 0)
             {
                 for(int i = 0; i < enemyIDsToSummon.Count; i++)
                 {
+                    Debug.Log("spawning testagent");
                     EntitySummoner.SummonEnemy(enemyIDsToSummon.Dequeue());
                 }
             }
+
+            // spawn tower
+
+            // move enemy
+
+            // tick tower
+
+            // apply effect
+
+            // damage enemy
+
+            // remove enemy
+
+            // remove tower
 
             yield return null;
         }
@@ -48,4 +61,8 @@ public class LoopTicker : MonoBehaviour
         enemyIDsToSummon.Enqueue(ID);
     }
 
+    public static void enqueueEnemyToRemove(TestAgent agent)
+    {
+
+    }
 }
