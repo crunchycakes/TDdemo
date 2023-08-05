@@ -163,6 +163,6 @@ public class AStarPathfinder : MonoBehaviour
         Vector3[] finalArray = (Vector3[])tempArray.ToArray(typeof(Vector3));
         Array.Reverse(finalArray);
 
-        return finalArray;
+        return finalArray[1..];
     }
 }
