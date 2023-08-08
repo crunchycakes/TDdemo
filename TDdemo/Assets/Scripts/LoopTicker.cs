@@ -13,10 +13,12 @@ public class LoopTicker : MonoBehaviour
     void Start()
     {
         enemyIDsToSummon = new Queue<int>();
+        enemiesToRemove = new Queue<TestAgent>();
         EntitySummoner.Init();
 
         StartCoroutine(GameLoop());
         InvokeRepeating("summontest", 0f, 3f);
+        ContinueLoop = true;
     }
 
     void summontest()
@@ -48,6 +50,7 @@ public class LoopTicker : MonoBehaviour
             // damage enemy
 
             // remove enemy
+
             if (enemiesToRemove.Count > 0)
             {
                 for (int i = 0; i < enemyIDsToSummon.Count; i++)
