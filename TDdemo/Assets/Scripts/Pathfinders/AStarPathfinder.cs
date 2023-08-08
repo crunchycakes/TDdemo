@@ -9,32 +9,6 @@ public class AStarPathfinder : MonoBehaviour
 
     private GridHandler gridHandler;
 
-    // 2d tuples were ugly
-    private class GridNode
-    {
-        public (int, int) pos;
-        public GridNode parent;
-        public int fvalue;
-        public int gvalue;
-
-        public GridNode ((int, int) pos, GridNode last, int gvalue, int fvalue)
-        {
-            this.pos = pos;
-            this.parent = last;
-            this.fvalue = fvalue;
-            this.gvalue = gvalue;
-        }
-
-        public GridNode ((int, int) pos, int gvalue, int fvalue)
-        {
-            this.pos = pos;
-            this.parent = this;
-            this.fvalue = fvalue;
-            this.gvalue = gvalue;
-        }
-    }
-
-
     // Start is called before the first frame update
     public void Init()
     {
@@ -43,8 +17,11 @@ public class AStarPathfinder : MonoBehaviour
 
     // returns ordered array of grid poses to go to
     // params use world pos, internally uses grid pos as tuples
-    // 0,0,0 grid is 0.5,0.5,0.5 world
+    // 0,0,0 grid is 0.5,0.5,0.5 world   TODO: do this programmatically!
     // world pos is 1 to 1 size wise to grid
+    // Vector3 worldStart: starting point of agent in world coords
+    // Vector3 worldEnd: world position of point to pathfind towards
+    // returns list of vector3s that form a path
     public Vector3[] pathfind(Vector3 worldStart, Vector3 worldEnd)
     {
         Vector3Int vectorStart = gridHandler.grid.WorldToCell(worldStart);
@@ -54,16 +31,16 @@ public class AStarPathfinder : MonoBehaviour
 
         // use background tilemap for accessible cells
 
-        ArrayList open = new ArrayList() { new GridNode(start, 0, manhattan(start, end)) }; // just tuple
+        ArrayList open = new ArrayList() { new GridHandler.GridNode(start, 0, manhattan(start, end)) }; // just tuple
         ArrayList closed = new ArrayList(); // gridnode
-        GridNode current;
+        GridHandler.GridNode current;
         int attempts = 0;
         int attemptLimit = 10000;
 
         while (open.Count > 0 && attempts < attemptLimit)
         {
             attempts++;
-            current = (GridNode) open[0]; // prio queue
+            current = (GridHandler.GridNode) open[0]; // prio queue
 
             if (current.pos == end) {
                 return rebuildPath(current);
@@ -90,7 +67,7 @@ public class AStarPathfinder : MonoBehaviour
                 int newFValue = newGValue + manhattan(newPos, end);
 
                 bool toContinue = false;
-                foreach (GridNode node in open)
+                foreach (GridHandler.GridNode node in open)
                 {
                     if (node.pos == newPos && node.fvalue < newFValue)
                     {
@@ -100,7 +77,7 @@ public class AStarPathfinder : MonoBehaviour
                 }
                 if (toContinue) { continue; }
 
-                foreach (GridNode node in closed)
+                foreach (GridHandler.GridNode node in closed)
                 {
                     if (node.pos == newPos && node.fvalue < newFValue)
                     {
@@ -114,12 +91,12 @@ public class AStarPathfinder : MonoBehaviour
                 int insertPos;
                 for (insertPos = 0; insertPos < open.Count; insertPos++) // maintain ascending
                 {
-                    if (newFValue <= ((GridNode) open[insertPos]).fvalue)
+                    if (newFValue <= ((GridHandler.GridNode) open[insertPos]).fvalue)
                     {
                         break;
                     }
                 }
-                GridNode neighbour = new GridNode(newPos, current, newGValue, newFValue);
+                GridHandler.GridNode neighbour = new GridHandler.GridNode(newPos, current, newGValue, newFValue);
                 open.Insert(insertPos, neighbour);
             }
 
@@ -146,7 +123,7 @@ public class AStarPathfinder : MonoBehaviour
 
     // from goal node, get a path back
     // needs an offset by 0.5 each axis
-    private Vector3[] rebuildPath(GridNode node)
+    private Vector3[] rebuildPath(GridHandler.GridNode node)
     {
         Vector3 offset = new Vector3(0.5f, 0.5f, 0f);
 
