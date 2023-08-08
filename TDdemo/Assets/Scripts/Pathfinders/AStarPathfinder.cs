@@ -37,6 +37,8 @@ public class AStarPathfinder : MonoBehaviour
         int attempts = 0;
         int attemptLimit = 10000;
 
+        (int, int)[] cardinalDirections = new (int, int)[4] { (-1, 0), (0, 1), (1, 0), (0, -1) };
+
         while (open.Count > 0 && attempts < attemptLimit)
         {
             attempts++;
@@ -49,7 +51,6 @@ public class AStarPathfinder : MonoBehaviour
             open.RemoveAt(0);
 
             // going to neighbours
-            (int, int)[] cardinalDirections = new (int, int)[4] { (-1, 0), (0, 1), (1, 0), (0, -1)};
             foreach ((int, int) direction in cardinalDirections)
             {
                 // check if it exists, then if not in open/closed and superior
