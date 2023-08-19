@@ -14,7 +14,9 @@ public class TestAgent : MonoBehaviour
     [SerializeField]
     private Slider healthSlider;
 
-    private TestAgentMovementReferToGrid movementScript;
+    // this being public is kinda gross
+    [HideInInspector]
+    public TestAgentMovementReferToGrid movementScript;
 
     // Start is called before the first frame update
     void Start()

@@ -7,7 +7,9 @@ public class TestAgentMovementReferToGrid : MonoBehaviour
     [SerializeField] private GameObject end;
     private GridHandler gridHandler;
 
-    private Vector3 pathPoint;
+    // this being public is kinda gross too
+    [HideInInspector]
+    public Vector3 pathPoint;
 
     // Start is called before the first frame update
     public void Init()
@@ -23,6 +25,8 @@ public class TestAgentMovementReferToGrid : MonoBehaviour
     }
 
     // Update is called once per frame
+    // TODO: remove after movement is reimplemented through LoopTicker
+    /*
     void Update()
     {
         this.gameObject.transform.position = Vector3.MoveTowards(
@@ -39,4 +43,5 @@ public class TestAgentMovementReferToGrid : MonoBehaviour
             }
         }
     }
+    */
 }

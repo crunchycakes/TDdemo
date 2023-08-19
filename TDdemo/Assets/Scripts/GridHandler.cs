@@ -55,12 +55,6 @@ public class GridHandler : MonoBehaviour
         regeneratePathMap(GameObject.Find("Goal").transform.position);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // assigns each tile an "optimal next tile" so agents can pathfind
     // dijkstra but backwards, and dynamic programming on each reachable tile
     // Vector3 worldEnd: world location of point to pathfind to
@@ -94,14 +88,14 @@ public class GridHandler : MonoBehaviour
             {
                 (int, int) newPos = addTuple(direction, current.pos);
 
-                // we will accept terrain tiles; they'll just cost a lot so agents avoid if possible
-                // this way, agents knocked back into terrain still pathfind
                 Vector3Int newPosVector = new Vector3Int(newPos.Item1, newPos.Item2, 0);
                 if (!backgroundTilemap.HasTile(newPosVector))
                 {
                     continue;
                 }
 
+                // we will accept terrain tiles; they'll just cost a lot so agents avoid if possible
+                // this way, agents knocked back into terrain still pathfind
                 int newGValue = current.gvalue + 1;
                 if (terrainTilemap.HasTile(newPosVector))
                 {
@@ -153,8 +147,6 @@ public class GridHandler : MonoBehaviour
             Debug.Log($"GridHandler.regeneratePathMap() exceeded {maxAttempts} attempts; " +
                 $"pathmap may not be complete");
         }
-
-        Debug.Log(pathMap);
 
         return;
     }

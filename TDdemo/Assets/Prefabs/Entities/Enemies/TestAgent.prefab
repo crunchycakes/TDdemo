@@ -101,9 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   health: 0
-  speed: 1
+  speed: 3
   ID: 1
   healthSlider: {fileID: 941419082515982745}
+  movementScript: {fileID: 0}
 --- !u!114 &3831420777038598129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   end: {fileID: 0}
+  pathPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &3688874936952236784
 GameObject:
   m_ObjectHideFlags: 0
