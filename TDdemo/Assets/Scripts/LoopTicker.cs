@@ -125,6 +125,7 @@ public class LoopTicker : MonoBehaviour
 
 }
 
+// not extensible atm; TODO: some way to allow enemies more behaviour; also a way to pause movement cleanly
 public struct MoveEnemiesJob : IJobParallelForTransform
 {
     [NativeDisableParallelForRestriction]

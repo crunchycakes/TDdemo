@@ -23,25 +23,4 @@ public class TestAgentMovementReferToGrid : MonoBehaviour
 
         pathPoint = gridHandler.nextPathPoint(gameObject.transform.position);
     }
-
-    // Update is called once per frame
-    // TODO: remove after movement is reimplemented through LoopTicker
-    /*
-    void Update()
-    {
-        this.gameObject.transform.position = Vector3.MoveTowards(
-            this.gameObject.transform.position, pathPoint, Time.deltaTime * 3f
-        );
-
-        if (this.gameObject.transform.position == pathPoint)
-        {
-            Vector3 oldPathPoint = pathPoint;
-            pathPoint = gridHandler.nextPathPoint(gameObject.transform.position);
-            if (oldPathPoint == pathPoint)
-            {
-                EntitySummoner.RemoveEnemy(gameObject.GetComponent<TestAgent>());
-            }
-        }
-    }
-    */
 }
