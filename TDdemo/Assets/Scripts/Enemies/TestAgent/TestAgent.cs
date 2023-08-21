@@ -14,7 +14,9 @@ public class TestAgent : MonoBehaviour
     [SerializeField]
     private Slider healthSlider;
 
-    private TestAgentMovement movementScript;
+    // this being public is kinda gross
+    [HideInInspector]
+    public TestAgentMovementReferToGrid movementScript;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +30,7 @@ public class TestAgent : MonoBehaviour
         healthSlider.maxValue = health;
         healthSlider.value = health;
 
-        movementScript = gameObject.GetComponent<TestAgentMovement>();
+        movementScript = gameObject.GetComponent<TestAgentMovementReferToGrid>();
         movementScript.Init();
     }
 }

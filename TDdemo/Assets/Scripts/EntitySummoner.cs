@@ -6,6 +6,7 @@ public class EntitySummoner : MonoBehaviour
 {
 
     public static List<TestAgent> enemiesInGame;
+    public static List<Transform> enemiesInGameTransform;
     public static Dictionary<int, GameObject> enemyPrefabs;
     public static Dictionary<int, Queue<TestAgent>> enemyObjectPools;
 
@@ -19,6 +20,7 @@ public class EntitySummoner : MonoBehaviour
             enemyPrefabs = new Dictionary<int, GameObject>();
             enemyObjectPools = new Dictionary<int, Queue<TestAgent>>();
             enemiesInGame = new List<TestAgent>();
+            enemiesInGameTransform = new List<Transform>();
 
             EnemySummonData[] enemies = Resources.LoadAll<EnemySummonData>("Enemies");
 
@@ -65,6 +67,7 @@ public class EntitySummoner : MonoBehaviour
             return null;
         }
 
+        enemiesInGameTransform.Add(summonedEnemy.transform);
         enemiesInGame.Add(summonedEnemy);
         summonedEnemy.ID = enemyID;
         return summonedEnemy;
@@ -75,6 +78,7 @@ public class EntitySummoner : MonoBehaviour
         enemyObjectPools[agent.ID].Enqueue(agent);
         agent.gameObject.SetActive(false);
         enemiesInGame.Remove(agent);
+        enemiesInGameTransform.Remove(agent.transform);
         // pooling; don't make gc run
     }
 
