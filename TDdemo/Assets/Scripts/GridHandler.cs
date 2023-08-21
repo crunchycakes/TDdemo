@@ -61,13 +61,13 @@ public class GridHandler : MonoBehaviour
             else if (tilemap.gameObject.name == "Background") { backgroundTilemap = tilemap; }
         }
 
-        regeneratePathMap(GameObject.Find("Goal").transform.position);
+        RegeneratePathMap(GameObject.Find("Goal").transform.position);
     }
 
     // assigns each tile an "optimal next tile" so agents can pathfind
     // dijkstra but backwards, and dynamic programming on each reachable tile
     // Vector3 worldEnd: world location of point to pathfind to
-    public static void regeneratePathMap(Vector3 worldEnd)
+    public static void RegeneratePathMap(Vector3 worldEnd)
     {
         pathMap = new Dictionary<(int, int), (int, int)>();
 
@@ -169,7 +169,7 @@ public class GridHandler : MonoBehaviour
     // gets worldpos and returns optimal next pos on the grid
     // Vector3 worldPos: current pos on world
     // returns Vector3 of next world pos to path to, which corresponds to cell on grid
-    public static Vector3 nextPathPoint(Vector3 worldPos)
+    public static Vector3 NextPathPoint(Vector3 worldPos)
     {
         Vector3Int cellPos = grid.WorldToCell(worldPos);
         (int, int) nextIntSpot = pathMap[(cellPos.x, cellPos.y)];

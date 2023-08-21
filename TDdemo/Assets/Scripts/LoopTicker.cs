@@ -22,13 +22,13 @@ public class LoopTicker : MonoBehaviour
         GridHandler.Init();
 
         StartCoroutine(GameLoop());
-        InvokeRepeating("summontest", 0f, 1f);
+        InvokeRepeating("summontest", 0f, 0.06f);
         ContinueLoop = true;
     }
 
     void summontest()
     {
-        enqueueEnemyIDToSummon(1);
+        EnqueueEnemyIDToSummon(1);
     }
 
     IEnumerator GameLoop()
@@ -79,10 +79,10 @@ public class LoopTicker : MonoBehaviour
                 if (shouldUpdateNode[i])
                 {
                     Vector3 oldPathPoint = currentAgent.movementScript.pathPoint;
-                    currentAgent.movementScript.pathPoint = GridHandler.nextPathPoint(currentAgent.transform.position);
+                    currentAgent.movementScript.pathPoint = GridHandler.NextPathPoint(currentAgent.transform.position);
                     if (oldPathPoint == currentAgent.movementScript.pathPoint)
                     {
-                        enqueueEnemyToRemove(currentAgent);
+                        EnqueueEnemyToRemove(currentAgent);
                     }
                 }
             }
@@ -114,12 +114,12 @@ public class LoopTicker : MonoBehaviour
         }
     }
 
-    public static void enqueueEnemyIDToSummon(int ID)
+    public static void EnqueueEnemyIDToSummon(int ID)
     {
         enemyIDsToSummon.Enqueue(ID);
     }
 
-    public static void enqueueEnemyToRemove(TestAgent agent)
+    public static void EnqueueEnemyToRemove(TestAgent agent)
     {
         enemiesToRemove.Enqueue(agent);
     }

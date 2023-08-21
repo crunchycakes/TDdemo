@@ -20,7 +20,7 @@ public class AStarPathfinder : MonoBehaviour
     // Vector3 worldStart: starting point of agent in world coords
     // Vector3 worldEnd: world position of point to pathfind towards
     // returns list of vector3s that form a path
-    public Vector3[] pathfind(Vector3 worldStart, Vector3 worldEnd)
+    public Vector3[] Pathfind(Vector3 worldStart, Vector3 worldEnd)
     {
         Vector3Int vectorStart = GridHandler.grid.WorldToCell(worldStart);
         Vector3Int vectorEnd = GridHandler.grid.WorldToCell(worldEnd);

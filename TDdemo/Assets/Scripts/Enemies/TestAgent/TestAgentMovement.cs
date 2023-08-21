@@ -24,7 +24,7 @@ public class TestAgentMovement : MonoBehaviour
             end = GameObject.Find("Goal");
         }
 
-        path = pathfinder.pathfind(this.transform.position, end.transform.position);
+        path = pathfinder.Pathfind(this.transform.position, end.transform.position);
     }
 
     // Update is called once per frame

@@ -18,6 +18,6 @@ public class TestAgentMovementReferToGrid : MonoBehaviour
             end = GameObject.Find("Goal");
         }
 
-        pathPoint = GridHandler.nextPathPoint(gameObject.transform.position);
+        pathPoint = GridHandler.NextPathPoint(gameObject.transform.position);
     }
 }
