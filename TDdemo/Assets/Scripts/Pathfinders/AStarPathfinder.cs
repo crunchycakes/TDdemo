@@ -7,12 +7,10 @@ using UnityEngine;
 public class AStarPathfinder : MonoBehaviour
 {
 
-    private GridHandler gridHandler;
-
     // Start is called before the first frame update
     public void Init()
     {
-        gridHandler = GameObject.Find("Admin").GetComponent<GridHandler>();
+        // only implemented; does not do anything here
     }
 
     // returns ordered array of grid poses to go to
@@ -24,8 +22,8 @@ public class AStarPathfinder : MonoBehaviour
     // returns list of vector3s that form a path
     public Vector3[] pathfind(Vector3 worldStart, Vector3 worldEnd)
     {
-        Vector3Int vectorStart = gridHandler.grid.WorldToCell(worldStart);
-        Vector3Int vectorEnd = gridHandler.grid.WorldToCell(worldEnd);
+        Vector3Int vectorStart = GridHandler.grid.WorldToCell(worldStart);
+        Vector3Int vectorEnd = GridHandler.grid.WorldToCell(worldEnd);
         (int, int) start = (vectorStart.x, vectorStart.y);
         (int, int) end = (vectorEnd.x, vectorEnd.y);
 
@@ -57,8 +55,8 @@ public class AStarPathfinder : MonoBehaviour
                 (int, int) newPos = addTuple(direction, current.pos);
 
                 Vector3Int newPosVector = new Vector3Int(newPos.Item1, newPos.Item2, 0);
-                if (!gridHandler.backgroundTilemap.HasTile(newPosVector)
-                    || gridHandler.terrainTilemap.HasTile(newPosVector)
+                if (!GridHandler.backgroundTilemap.HasTile(newPosVector)
+                    || GridHandler.terrainTilemap.HasTile(newPosVector)
                 )
                 {
                     continue;
@@ -132,11 +130,11 @@ public class AStarPathfinder : MonoBehaviour
         while (node.parent != node)
         {
             Vector3Int cellPos = new Vector3Int(node.pos.Item1, node.pos.Item2, 0);
-            tempArray.Add(gridHandler.backgroundTilemap.CellToWorld(cellPos) + offset);
+            tempArray.Add(GridHandler.backgroundTilemap.CellToWorld(cellPos) + offset);
             node = node.parent;
         }
         Vector3Int finalcellPos = new Vector3Int(node.pos.Item1, node.pos.Item2, 0);
-        tempArray.Add(gridHandler.backgroundTilemap.CellToWorld(finalcellPos) + offset);
+        tempArray.Add(GridHandler.backgroundTilemap.CellToWorld(finalcellPos) + offset);
 
         Vector3[] finalArray = (Vector3[])tempArray.ToArray(typeof(Vector3));
         Array.Reverse(finalArray);

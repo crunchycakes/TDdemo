@@ -7,14 +7,14 @@ using UnityEngine.Tilemaps;
 public class GridHandler : MonoBehaviour
 {
 
-    public Grid grid;
-    public Tilemap terrainTilemap;
-    public Tilemap backgroundTilemap;
+    public static Grid grid;
+    public static Tilemap terrainTilemap;
+    public static Tilemap backgroundTilemap;
 
     // key: current spot
     // value: optimal next spot
     // all uses cell pos, NOT WORLD POS
-    private Dictionary<(int, int), (int, int)> pathMap;
+    private static Dictionary<(int, int), (int, int)> pathMap;
 
     // 2d tuples are ugly
     public class GridNode
@@ -50,15 +50,24 @@ public class GridHandler : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public static void Init()
     {
+        // get grid and tilemaps; right now, this depends on names
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+        Tilemap[] temptilemaps = grid.GetComponentsInChildren<Tilemap>();
+        foreach (Tilemap tilemap in temptilemaps)
+        {
+            if (tilemap.gameObject.name == "Terrain") { terrainTilemap = tilemap; }
+            else if (tilemap.gameObject.name == "Background") { backgroundTilemap = tilemap; }
+        }
+
         regeneratePathMap(GameObject.Find("Goal").transform.position);
     }
 
     // assigns each tile an "optimal next tile" so agents can pathfind
     // dijkstra but backwards, and dynamic programming on each reachable tile
     // Vector3 worldEnd: world location of point to pathfind to
-    public void regeneratePathMap(Vector3 worldEnd)
+    public static void regeneratePathMap(Vector3 worldEnd)
     {
         pathMap = new Dictionary<(int, int), (int, int)>();
 
@@ -152,7 +161,7 @@ public class GridHandler : MonoBehaviour
     }
 
     // code duplication
-    private (int, int) addTuple((int, int) t1, (int, int) t2)
+    private static (int, int) addTuple((int, int) t1, (int, int) t2)
     {
         return (t1.Item1 + t2.Item1, t1.Item2 + t2.Item2);
     }
@@ -160,7 +169,7 @@ public class GridHandler : MonoBehaviour
     // gets worldpos and returns optimal next pos on the grid
     // Vector3 worldPos: current pos on world
     // returns Vector3 of next world pos to path to, which corresponds to cell on grid
-    public Vector3 nextPathPoint(Vector3 worldPos)
+    public static Vector3 nextPathPoint(Vector3 worldPos)
     {
         Vector3Int cellPos = grid.WorldToCell(worldPos);
         (int, int) nextIntSpot = pathMap[(cellPos.x, cellPos.y)];

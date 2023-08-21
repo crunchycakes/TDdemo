@@ -13,20 +13,17 @@ public class LoopTicker : MonoBehaviour
     private static Queue<TestAgent> enemiesToRemove;
     public bool ContinueLoop;
 
-    private GridHandler gridHandler;
-
     // Start is called before the first frame update
     void Start()
     {
         enemyIDsToSummon = new Queue<int>();
         enemiesToRemove = new Queue<TestAgent>();
         EntitySummoner.Init();
+        GridHandler.Init();
 
         StartCoroutine(GameLoop());
         InvokeRepeating("summontest", 0f, 3f);
         ContinueLoop = true;
-
-        gridHandler = GameObject.Find("Admin").GetComponent<GridHandler>();
     }
 
     void summontest()
@@ -79,7 +76,7 @@ public class LoopTicker : MonoBehaviour
                 if (currentAgent.transform.position == currentAgent.movementScript.pathPoint)
                 {
                     Vector3 oldPathPoint = currentAgent.movementScript.pathPoint;
-                    currentAgent.movementScript.pathPoint = gridHandler.nextPathPoint(currentAgent.transform.position);
+                    currentAgent.movementScript.pathPoint = GridHandler.nextPathPoint(currentAgent.transform.position);
                     if (oldPathPoint == currentAgent.movementScript.pathPoint)
                     {
                         enqueueEnemyToRemove(currentAgent);

@@ -5,7 +5,6 @@ using UnityEngine;
 public class TestAgentMovementReferToGrid : MonoBehaviour
 {
     [SerializeField] private GameObject end;
-    private GridHandler gridHandler;
 
     // this being public is kinda gross too
     [HideInInspector]
@@ -14,13 +13,11 @@ public class TestAgentMovementReferToGrid : MonoBehaviour
     // Start is called before the first frame update
     public void Init()
     {
-        gridHandler = GameObject.Find("Admin").GetComponent<GridHandler>();
-
         if (end == null)
         {
             end = GameObject.Find("Goal");
         }
 
-        pathPoint = gridHandler.nextPathPoint(gameObject.transform.position);
+        pathPoint = GridHandler.nextPathPoint(gameObject.transform.position);
     }
 }
