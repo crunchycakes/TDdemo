@@ -22,7 +22,7 @@ public class LoopTicker : MonoBehaviour
         GridHandler.Init();
 
         StartCoroutine(GameLoop());
-        InvokeRepeating("summontest", 0f, 3f);
+        InvokeRepeating("summontest", 0f, 1f);
         ContinueLoop = true;
     }
 
@@ -49,6 +49,8 @@ public class LoopTicker : MonoBehaviour
             // move enemy
 
             NativeArray<Vector3> currentNodes = new NativeArray<Vector3>(EntitySummoner.enemiesInGame.Count, Allocator.TempJob);
+            // not sure if checking in job is faster than checking in main thread
+            NativeArray<bool> shouldUpdateNode = new NativeArray<bool>(EntitySummoner.enemiesInGame.Count, Allocator.TempJob);
             NativeArray<float> enemySpeeds = new NativeArray<float>(EntitySummoner.enemiesInGame.Count, Allocator.TempJob);
             TransformAccessArray enemyAccess = new TransformAccessArray(EntitySummoner.enemiesInGameTransform.ToArray(), 
                 2); // 2 threads
@@ -57,13 +59,14 @@ public class LoopTicker : MonoBehaviour
             {
                 currentNodes[i] = EntitySummoner.enemiesInGame[i].movementScript.pathPoint;
                 enemySpeeds[i] = EntitySummoner.enemiesInGame[i].speed;
-
+                shouldUpdateNode[i] = false;
             }
 
             MoveEnemiesJob moveJob = new MoveEnemiesJob
             {
                 currentNodeList = currentNodes,
                 enemySpeed = enemySpeeds,
+                toUpdate = shouldUpdateNode,
                 deltaTime = Time.deltaTime
             };
 
@@ -73,7 +76,7 @@ public class LoopTicker : MonoBehaviour
             for(int i = 0; i < EntitySummoner.enemiesInGame.Count; i++)
             {
                 TestAgent currentAgent = EntitySummoner.enemiesInGame[i];
-                if (currentAgent.transform.position == currentAgent.movementScript.pathPoint)
+                if (shouldUpdateNode[i])
                 {
                     Vector3 oldPathPoint = currentAgent.movementScript.pathPoint;
                     currentAgent.movementScript.pathPoint = GridHandler.nextPathPoint(currentAgent.transform.position);
@@ -87,6 +90,7 @@ public class LoopTicker : MonoBehaviour
             currentNodes.Dispose();
             enemySpeeds.Dispose();
             enemyAccess.Dispose();
+            shouldUpdateNode.Dispose();
 
             // tick tower
 
@@ -130,6 +134,8 @@ public struct MoveEnemiesJob : IJobParallelForTransform
     [NativeDisableParallelForRestriction]
     public NativeArray<float> enemySpeed;
     [NativeDisableParallelForRestriction]
+    public NativeArray<bool> toUpdate;
+    [NativeDisableParallelForRestriction]
     public float deltaTime;
 
     public void Execute(int index, TransformAccess transform)
@@ -138,6 +144,8 @@ public struct MoveEnemiesJob : IJobParallelForTransform
         transform.position = Vector3.MoveTowards(
             transform.position, currentNodeList[index], deltaTime * enemySpeed[index]
         );
+
+        if (transform.position == currentNodeList[index]) { toUpdate[index] = true; }
 
     }
 }
