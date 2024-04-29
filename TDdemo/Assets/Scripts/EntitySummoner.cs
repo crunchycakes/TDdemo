@@ -5,10 +5,10 @@ using UnityEngine;
 public class EntitySummoner : MonoBehaviour
 {
 
-    public static List<TestAgent> enemiesInGame;
+    public static List<Agent> enemiesInGame;
     public static List<Transform> enemiesInGameTransform;
     public static Dictionary<int, GameObject> enemyPrefabs;
-    public static Dictionary<int, Queue<TestAgent>> enemyObjectPools;
+    public static Dictionary<int, Queue<Agent>> enemyObjectPools;
 
     private static bool IsInit;
 
@@ -18,8 +18,8 @@ public class EntitySummoner : MonoBehaviour
         if (!IsInit)
         {
             enemyPrefabs = new Dictionary<int, GameObject>();
-            enemyObjectPools = new Dictionary<int, Queue<TestAgent>>();
-            enemiesInGame = new List<TestAgent>();
+            enemyObjectPools = new Dictionary<int, Queue<Agent>>();
+            enemiesInGame = new List<Agent>();
             enemiesInGameTransform = new List<Transform>();
 
             EnemySummonData[] enemies = Resources.LoadAll<EnemySummonData>("Enemies");
@@ -27,7 +27,7 @@ public class EntitySummoner : MonoBehaviour
             foreach (EnemySummonData enemy in enemies)
             {
                 enemyPrefabs.Add(enemy.enemyID, enemy.enemyPrefab);
-                enemyObjectPools.Add(enemy.enemyID, new Queue<TestAgent>());
+                enemyObjectPools.Add(enemy.enemyID, new Queue<Agent>());
             }
 
             IsInit = true;
@@ -39,13 +39,13 @@ public class EntitySummoner : MonoBehaviour
 
     }
 
-    public static TestAgent SummonEnemy(int enemyID)
+    public static Agent SummonEnemy(int enemyID)
     {
-        TestAgent summonedEnemy;
+        Agent summonedEnemy;
 
         if (enemyPrefabs.ContainsKey(enemyID))
         {
-            Queue<TestAgent> referencedQueue = enemyObjectPools[enemyID];
+            Queue<Agent> referencedQueue = enemyObjectPools[enemyID];
 
             if (referencedQueue.Count > 0)
             {
@@ -57,7 +57,7 @@ public class EntitySummoner : MonoBehaviour
             } else
             {
                 GameObject newEnemy = Instantiate(enemyPrefabs[enemyID], new Vector3(-3.5f, 1.5f), Quaternion.identity);
-                summonedEnemy = newEnemy.GetComponent<TestAgent>();
+                summonedEnemy = newEnemy.GetComponent<Agent>();
                 summonedEnemy.Init();
             }
 
@@ -73,7 +73,7 @@ public class EntitySummoner : MonoBehaviour
         return summonedEnemy;
     }
 
-    public static void RemoveEnemy(TestAgent agent)
+    public static void RemoveEnemy(Agent agent)
     {
         enemyObjectPools[agent.ID].Enqueue(agent);
         agent.gameObject.SetActive(false);

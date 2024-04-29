@@ -95,7 +95,7 @@ public class AStarPathfinder : MonoBehaviour
                         break;
                     }
                 }
-                GridHandler.GridNode neighbour = new GridHandler.GridNode(newPos, current, newGValue, newFValue);
+                GridHandler.GridNode neighbour = new GridHandler.GridNode(newPos, newGValue, newFValue, current);
                 open.Insert(insertPos, neighbour);
             }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TestAgentMovement : MonoBehaviour
+public class AgentMovement : MonoBehaviour
 {
 
     // TODO: make AStarPathfinder inherit from abstract Pathfinder class
@@ -45,7 +45,7 @@ public class TestAgentMovement : MonoBehaviour
         if (pathIndex >= path.Length) // if end reached, deactivate
         {
             // ew coupling
-            EntitySummoner.RemoveEnemy(gameObject.GetComponent<TestAgent>());
+            EntitySummoner.RemoveEnemy(gameObject.GetComponent<Agent>());
         }
 
     }

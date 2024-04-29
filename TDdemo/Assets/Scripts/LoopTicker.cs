@@ -10,19 +10,19 @@ public class LoopTicker : MonoBehaviour
 {
     
     private static Queue<int> enemyIDsToSummon;
-    private static Queue<TestAgent> enemiesToRemove;
+    private static Queue<Agent> enemiesToRemove;
     public bool ContinueLoop;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyIDsToSummon = new Queue<int>();
-        enemiesToRemove = new Queue<TestAgent>();
+        enemiesToRemove = new Queue<Agent>();
         EntitySummoner.Init();
         GridHandler.Init();
 
         StartCoroutine(GameLoop());
-        InvokeRepeating("summontest", 0f, 0.06f);
+        InvokeRepeating("summontest", 0f, 0.5f);
         ContinueLoop = true;
     }
 
@@ -58,7 +58,7 @@ public class LoopTicker : MonoBehaviour
             for (int i = 0; i < EntitySummoner.enemiesInGame.Count; i++)
             {
                 currentNodes[i] = EntitySummoner.enemiesInGame[i].movementScript.pathPoint;
-                enemySpeeds[i] = EntitySummoner.enemiesInGame[i].speed;
+                enemySpeeds[i] = EntitySummoner.enemiesInGame[i].Speed;
                 shouldUpdateNode[i] = false;
             }
 
@@ -75,7 +75,7 @@ public class LoopTicker : MonoBehaviour
 
             for(int i = 0; i < EntitySummoner.enemiesInGame.Count; i++)
             {
-                TestAgent currentAgent = EntitySummoner.enemiesInGame[i];
+                Agent currentAgent = EntitySummoner.enemiesInGame[i];
                 if (shouldUpdateNode[i])
                 {
                     Vector3 oldPathPoint = currentAgent.movementScript.pathPoint;
@@ -119,7 +119,7 @@ public class LoopTicker : MonoBehaviour
         enemyIDsToSummon.Enqueue(ID);
     }
 
-    public static void EnqueueEnemyToRemove(TestAgent agent)
+    public static void EnqueueEnemyToRemove(Agent agent)
     {
         enemiesToRemove.Enqueue(agent);
     }

@@ -24,7 +24,7 @@ public class GridHandler : MonoBehaviour
         public int fvalue;
         public int gvalue;
 
-        public GridNode((int, int) pos, GridNode last, int gvalue, int fvalue)
+        public GridNode((int, int) pos, int gvalue, int fvalue, GridNode last)
         {
             this.pos = pos;
             this.parent = last;

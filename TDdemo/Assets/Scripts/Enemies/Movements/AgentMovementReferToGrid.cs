@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestAgentMovementReferToGrid : MonoBehaviour
+public class AgentMovementReferToGrid : MonoBehaviour
 {
     [SerializeField] private GameObject end;
 
