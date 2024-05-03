@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // this should probably be static hey
-public class AStarPathfinder : MonoBehaviour
+public class PathfinderAStar : Pathfinder
 {
 
     // Start is called before the first frame update
-    public void Init()
+    public override void Init()
     {
         // only implemented; does not do anything here
     }
@@ -20,7 +20,7 @@ public class AStarPathfinder : MonoBehaviour
     // Vector3 worldStart: starting point of agent in world coords
     // Vector3 worldEnd: world position of point to pathfind towards
     // returns list of vector3s that form a path
-    public Vector3[] Pathfind(Vector3 worldStart, Vector3 worldEnd)
+    public override Vector3[] Pathfind(Vector3 worldStart, Vector3 worldEnd)
     {
         Vector3Int vectorStart = GridHandler.grid.WorldToCell(worldStart);
         Vector3Int vectorEnd = GridHandler.grid.WorldToCell(worldEnd);

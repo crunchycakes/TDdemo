@@ -40,7 +40,7 @@ public class Agent : MonoBehaviour
 
     // this being public is kinda gross
     [HideInInspector]
-    public AgentMovementReferToGrid movementScript;
+    public AgentMovement movementScript;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +54,7 @@ public class Agent : MonoBehaviour
         healthSlider.maxValue = health;
         healthSlider.value = health;
 
-        movementScript = gameObject.GetComponent<AgentMovementReferToGrid>();
+        movementScript = gameObject.GetComponent<AgentMovement>();
         movementScript.Init();
     }
 }

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4481539156054817759}
   - component: {fileID: 852269193054989005}
   - component: {fileID: 2069495266055718323}
-  - component: {fileID: 3831420777038598129}
+  - component: {fileID: 1277688577580890581}
   m_Layer: 0
-  m_Name: TestAgent
+  m_Name: TestAgentAStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,12 +100,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
-  health: 0
   speed: 3
-  ID: 1
   healthSlider: {fileID: 941419082515982745}
   movementScript: {fileID: 0}
---- !u!114 &3831420777038598129
+--- !u!114 &1277688577580890581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,11 +112,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 256682938599706591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59cb6d17022df4d49987cfbedd1075c0, type: 3}
+  m_Script: {fileID: 11500000, guid: b2304087eca90934aa8908acfb394dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  end: {fileID: 0}
-  pathPoint: {x: 0, y: 0, z: 0}
+  pathfinder: {fileID: 0}
 --- !u!1 &3688874936952236784
 GameObject:
   m_ObjectHideFlags: 0

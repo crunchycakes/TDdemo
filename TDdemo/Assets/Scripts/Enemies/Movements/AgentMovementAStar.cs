@@ -10,7 +10,7 @@ public class AgentMovementAStar : AgentMovement
 
     public override void Init()
     {
-        pathfinder = new AStarPathfinder();
+        pathfinder = gameObject.AddComponent<PathfinderAStar>();
         pathfinder.Init();
 
         pathIndex = 0;

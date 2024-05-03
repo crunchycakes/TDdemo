@@ -7,7 +7,7 @@ public abstract class AgentMovement : MonoBehaviour
 {
 
     // TODO: make AStarPathfinder inherit from abstract Pathfinder class
-    [SerializeField] protected AStarPathfinder pathfinder;
+    [SerializeField] protected Pathfinder pathfinder;
 
     protected GameObject target;
     public GameObject Target
