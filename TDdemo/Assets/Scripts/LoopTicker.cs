@@ -57,7 +57,7 @@ public class LoopTicker : MonoBehaviour
 
             for (int i = 0; i < EntitySummoner.enemiesInGame.Count; i++)
             {
-                currentNodes[i] = EntitySummoner.enemiesInGame[i].movementScript.pathPoint;
+                currentNodes[i] = EntitySummoner.enemiesInGame[i].movementScript.PathPoint;
                 enemySpeeds[i] = EntitySummoner.enemiesInGame[i].Speed;
                 shouldUpdateNode[i] = false;
             }
@@ -78,9 +78,9 @@ public class LoopTicker : MonoBehaviour
                 Agent currentAgent = EntitySummoner.enemiesInGame[i];
                 if (shouldUpdateNode[i])
                 {
-                    Vector3 oldPathPoint = currentAgent.movementScript.pathPoint;
-                    currentAgent.movementScript.pathPoint = GridHandler.NextPathPoint(currentAgent.transform.position);
-                    if (oldPathPoint == currentAgent.movementScript.pathPoint)
+                    Vector3 oldPathPoint = currentAgent.movementScript.PathPoint;
+                    currentAgent.movementScript.PathPoint = GridHandler.NextPathPoint(currentAgent.transform.position);
+                    if (oldPathPoint == currentAgent.movementScript.PathPoint)
                     {
                         EnqueueEnemyToRemove(currentAgent);
                     }

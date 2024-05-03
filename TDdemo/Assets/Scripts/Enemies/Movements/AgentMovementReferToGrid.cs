@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AgentMovementReferToGrid : MonoBehaviour
+public class AgentMovementReferToGrid : AgentMovement
 {
-    [SerializeField] private GameObject end;
 
-    // this being public is kinda gross too
-    [HideInInspector]
-    public Vector3 pathPoint;
-
-    // Start is called before the first frame update
-    public void Init()
+    public override void Init()
     {
-        if (end == null)
+        if (target == null)
         {
-            end = GameObject.Find("Goal");
+            target = GameObject.Find("Goal");
         }
 
         pathPoint = GridHandler.NextPathPoint(gameObject.transform.position);
     }
+
+    public override void UpdatePathPoint()
+    {
+        pathPoint = GridHandler.NextPathPoint(gameObject.transform.position);
+    }
+
+    public override void ToNextPathPoint()
+    {
+        UpdatePathPoint();
+    }
+
 }

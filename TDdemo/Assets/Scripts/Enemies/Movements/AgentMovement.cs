@@ -3,50 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AgentMovement : MonoBehaviour
+public abstract class AgentMovement : MonoBehaviour
 {
 
     // TODO: make AStarPathfinder inherit from abstract Pathfinder class
-    [SerializeField] private AStarPathfinder pathfinder;
-    [SerializeField] private GameObject end;
+    [SerializeField] protected AStarPathfinder pathfinder;
 
-    private Vector3[] path;
-    private int pathIndex;
-
-    public void Init()
+    protected GameObject target;
+    public GameObject Target
     {
-        pathfinder.Init();
-
-        pathIndex = 0;
-
-        if (end == null)
-        {
-            end = GameObject.Find("Goal");
-        }
-
-        path = pathfinder.Pathfind(this.transform.position, end.transform.position);
+        get { return target; }
+        set { target = value; }
     }
 
-    // Update is called once per frame
-    void Update()
+    protected Vector3 pathPoint;
+    public Vector3 PathPoint
     {
-        if (pathIndex < path.Length)
-        {
-            this.gameObject.transform.position = Vector3.MoveTowards(
-                this.gameObject.transform.position, path[pathIndex], Time.deltaTime * 3f
-            );
-
-            if (this.gameObject.transform.position == path[pathIndex])
-            {
-                pathIndex++;
-            }
-        }
-
-        if (pathIndex >= path.Length) // if end reached, deactivate
-        {
-            // ew coupling
-            EntitySummoner.RemoveEnemy(gameObject.GetComponent<Agent>());
-        }
-
+        get { return pathPoint; }
+        set { pathPoint = value; }
     }
+
+    public abstract void Init();
+
+    // big update, expensive
+    public abstract void UpdatePathPoint();
+    // small update, go to next calced pathpoint; in some cases may be same as update
+    public abstract void ToNextPathPoint();
+
 }
